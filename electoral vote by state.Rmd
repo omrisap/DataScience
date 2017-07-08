@@ -1,0 +1,34 @@
+---
+title: "electoral vote by state"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 08-07-2017
+## Summary
+
+I used 
+https://inkplant.com/code/state-latitudes-longitudes
+to get all states locations and 
+http://state.1keydata.com/state-electoral-votes.php
+to get the make this data set -
+
+
+```{r loadData}
+statesData <- read.csv("states.csv")
+head(statesData)
+```
+
+## Creating the map
+
+I will create a circle that represent the state Electoral Votes For 2016
+
+```{r voteMap}
+library(leaflet)
+statesData[,2:3] %>% leaflet() %>% addTiles() %>% addCircles(weight=1,radius=statesData$Electoral.Votes*10000)
+```
+
+The circle radius size represent the Electoral Votes number
